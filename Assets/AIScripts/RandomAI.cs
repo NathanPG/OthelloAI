@@ -12,7 +12,7 @@ public class RandomAI : P1AI {
     /// <param name="currentBoard"></param>
     /// <returns></returns>
 
-    public override KeyValuePair<int, int> makeMove(List<KeyValuePair<int, int>> availableMoves, BoardSpace[][] currentBoard, int depth) {
+    public override KeyValuePair<int, int> makeMove(List<KeyValuePair<int, int>> availableMoves, BoardSpace[][] currentBoard) {
 
         return availableMoves[Random.Range(0, availableMoves.Count)];
     }
