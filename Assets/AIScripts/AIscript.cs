@@ -17,7 +17,7 @@ public abstract class AIscript {
     /// <param name="availableMoves"></param>
     /// <param name="currentBoard"></param>
     /// <returns></returns>
-    public abstract KeyValuePair<int, int> makeMove(List<KeyValuePair<int, int>> availableMoves, BoardSpace[][] currentBoard);
+    public abstract KeyValuePair<int, int> makeMove(List<KeyValuePair<int, int>> availableMoves, BoardSpace[][] currentBoard, uint turn_number);
 
     public abstract float Evaluation(BoardSpace[][] currentBoard);
     /// <summary>

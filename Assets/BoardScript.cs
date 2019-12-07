@@ -108,7 +108,7 @@ public class BoardScript : MonoBehaviour {
             }
             if (turnNumber % 2 == 0 && isPlayerOneAI) {
 
-                KeyValuePair<int, int> move = playerOneScript.makeMove(currentValidMoves, board);
+                KeyValuePair<int, int> move = playerOneScript.makeMove(currentValidMoves, board, turnNumber);
                 PlacePiece(move.Value, move.Key);
             } else if (turnNumber % 2 == 1 && isPlayerTwoAI) {
 
