@@ -35,8 +35,8 @@ public class BoardScript : MonoBehaviour {
     public string playerTwoScriptClassName;
 
     
-    AIScript playerOneScript;
-    AIScript playerTwoScript;
+    P1AI playerOneScript;
+    P2AI playerTwoScript;
     public Text bText;
     public Text wText;
     public Text tText;
@@ -73,14 +73,14 @@ public class BoardScript : MonoBehaviour {
             System.Type scriptType = System.Reflection.Assembly.GetExecutingAssembly().GetType("RandomAI");
             //System.Type scriptType = System.Reflection.Assembly.GetExecutingAssembly().GetType(playerOneScriptClassName);
             System.Object o = Activator.CreateInstance(scriptType);
-            playerOneScript = (AIScript)o;
+            playerOneScript = (P1AI)o;
             playerOneScript.setColor(BoardSpace.BLACK);
         }
         if (isPlayerTwoAI) {
             //System.Type scriptType = System.Reflection.Assembly.GetExecutingAssembly().GetType(playerTwoScriptClassName);
             System.Type scriptType = System.Reflection.Assembly.GetExecutingAssembly().GetType("RandomAI");
             System.Object o = Activator.CreateInstance(scriptType);
-            playerTwoScript = (AIScript)o;
+            playerTwoScript = (P2AI)o;
             playerTwoScript.setColor(BoardSpace.WHITE);
         }
 

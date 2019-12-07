@@ -4,7 +4,8 @@ using UnityEngine;
 
 
 [System.Serializable]
-public abstract class AIScript {
+public abstract class P2AI
+{
 
     protected BoardSpace color;
 
@@ -23,7 +24,8 @@ public abstract class AIScript {
     /// Displays the piece on the board.
     /// </summary>
     /// <param name="color"></param>
-    public void setColor(BoardSpace color) {
+    public void setColor(BoardSpace color)
+    {
         this.color = color;
     }
 
