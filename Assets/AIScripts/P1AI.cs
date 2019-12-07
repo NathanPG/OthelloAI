@@ -19,6 +19,7 @@ public class P1AI : AIscript
 
     public override KeyValuePair<int, int> makeMove(List<KeyValuePair<int, int>> availableMoves, BoardSpace[][] currentBoard, uint turn_number)
     {
+        Debug.Log(string.Join(",", availableMoves));
         BoardSpace enemyColor = turn_number % 2 == 0 ? BoardSpace.WHITE : BoardSpace.BLACK;
         BoardSpace ourColor = turn_number % 2 == 0 ? BoardSpace.BLACK : BoardSpace.WHITE;
         KeyValuePair<int, int> result;
@@ -31,12 +32,14 @@ public class P1AI : AIscript
                     newer_board[i][j] = currentBoard[i][j];
                 }
             }
+            Debug.Log(move.Key + "," + move.Value);
             newer_board[move.Key][move.Value] = ourColor;
-            List<KeyValuePair<int, int>> changed = BoardScript.GetPointsChangedFromMove(currentBoard, turn_number, move.Key, move.Value);
+            List<KeyValuePair<int, int>> changed = BoardScript.GetPointsChangedFromMove(newer_board, turn_number, move.Value, move.Key);
+            Debug.Log(string.Join(",", changed));
             foreach (KeyValuePair<int, int> change in changed) {
                 newer_board[change.Key][change.Value] = ourColor;
             }
-            float candidate = negaMax(newer_board, 1, Maxdepth, turn_number);
+            float candidate = negaMax(newer_board, 1, Maxdepth, turn_number+1);
             if(candidate > score) {
                 result = new KeyValuePair<int, int>(move.Key, move.Value);
             }
@@ -63,14 +66,16 @@ public class P1AI : AIscript
                 }
             }
             newer_board[move.Key][move.Value] = ourColor;
-            List<KeyValuePair<int, int>> changed = BoardScript.GetPointsChangedFromMove(currentBoard, turn_number, move.Key, move.Value);
+            List<KeyValuePair<int, int>> changed = BoardScript.GetPointsChangedFromMove(newer_board, turn_number, move.Value, move.Key);
+            Debug.Log(string.Join(",", changed));
             foreach (KeyValuePair<int, int> change in changed) {
                 newer_board[change.Key][change.Value] = ourColor;
             }
             score.Add(negaMax(newer_board, current_depth + 1, Max_depth, turn_number + 1));
 
         }
-        if(current_depth % 2 == 1) {
+        Debug.Log(string.Join(",", score));
+        if (current_depth % 2 == 1) {
             return score.Min();
         } else {
             return score.Max();

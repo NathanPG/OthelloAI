@@ -59,7 +59,7 @@ public class BoardScript : MonoBehaviour {
          */
 
         isPlayerOneAI = true;
-        isPlayerTwoAI = true;
+        isPlayerTwoAI = false;
 
         /* For the calls to System.Reflection.Assembly.GetExecutingAssembly() below, enter the
          * string that names your .cs module that contains your AI code, such as is shown here
@@ -112,7 +112,7 @@ public class BoardScript : MonoBehaviour {
                 PlacePiece(move.Value, move.Key);
             } else if (turnNumber % 2 == 1 && isPlayerTwoAI) {
 
-                KeyValuePair<int, int> move = playerTwoScript.makeMove(currentValidMoves, board);
+                KeyValuePair<int, int> move = playerTwoScript.makeMove(currentValidMoves, board, turnNumber);
                 PlacePiece(move.Value, move.Key);
 
             } else {
