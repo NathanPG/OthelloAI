@@ -32,10 +32,10 @@ public class P1AI : AIscript
                     newer_board[i][j] = currentBoard[i][j];
                 }
             }
-            Debug.Log(move.Key + "," + move.Value);
+            //Debug.Log(move.Key + "," + move.Value);
             newer_board[move.Key][move.Value] = ourColor;
             List<KeyValuePair<int, int>> changed = BoardScript.GetPointsChangedFromMove(newer_board, turn_number, move.Value, move.Key);
-            Debug.Log(string.Join(",", changed));
+            //Debug.Log(string.Join(",", changed));
             foreach (KeyValuePair<int, int> change in changed) {
                 newer_board[change.Key][change.Value] = ourColor;
             }
@@ -67,14 +67,14 @@ public class P1AI : AIscript
             }
             newer_board[move.Key][move.Value] = ourColor;
             List<KeyValuePair<int, int>> changed = BoardScript.GetPointsChangedFromMove(newer_board, turn_number, move.Value, move.Key);
-            Debug.Log(string.Join(",", changed));
+            //Debug.Log(string.Join(",", changed));
             foreach (KeyValuePair<int, int> change in changed) {
                 newer_board[change.Key][change.Value] = ourColor;
             }
             score.Add(negaMax(newer_board, current_depth + 1, Max_depth, turn_number + 1));
 
         }
-        Debug.Log(string.Join(",", score));
+        //Debug.Log(string.Join(",", score));
         if (current_depth % 2 == 1) {
             return score.Min();
         } else {
