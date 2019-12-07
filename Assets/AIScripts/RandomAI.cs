@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomAI : P1AI {
+public class RandomAI : AIscript
+{
 
     /// <summary>
     /// This shows how to override the abstract definition of makeMove. All this one
@@ -16,5 +17,5 @@ public class RandomAI : P1AI {
 
         return availableMoves[Random.Range(0, availableMoves.Count)];
     }
-
+    public override float Evaluation(BoardSpace[][] currentBoard, uint turn_number) { return 0; }
 }

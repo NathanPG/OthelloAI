@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// AI for player two (White)
 /// </summary>
-public class P2AI : AIscript
+public class ABNegaMax : AIscript
 {
     public int Maxdepth = 1;
     /// <summary>

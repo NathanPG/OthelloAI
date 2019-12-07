@@ -35,8 +35,8 @@ public class BoardScript : MonoBehaviour {
     public string playerTwoScriptClassName;
 
     
-    P1AI playerOneScript;
-    P2AI playerTwoScript;
+    NegaMAX playerOneScript;
+    ABNegaMax playerTwoScript;
     public Text bText;
     public Text wText;
     public Text tText;
@@ -70,17 +70,17 @@ public class BoardScript : MonoBehaviour {
 
         possibleMovesArray = new List<GameObject>();
         if (isPlayerOneAI) {
-            System.Type scriptType = System.Reflection.Assembly.GetExecutingAssembly().GetType("P1AI");
+            System.Type scriptType = System.Reflection.Assembly.GetExecutingAssembly().GetType("NegaMAX");
             //System.Type scriptType = System.Reflection.Assembly.GetExecutingAssembly().GetType(playerOneScriptClassName);
             System.Object o = Activator.CreateInstance(scriptType);
-            playerOneScript = (P1AI)o;
+            playerOneScript = (NegaMAX)o;
             playerOneScript.setColor(BoardSpace.BLACK);
         }
         if (isPlayerTwoAI) {
             //System.Type scriptType = System.Reflection.Assembly.GetExecutingAssembly().GetType(playerTwoScriptClassName);
-            System.Type scriptType = System.Reflection.Assembly.GetExecutingAssembly().GetType("P2AI");
+            System.Type scriptType = System.Reflection.Assembly.GetExecutingAssembly().GetType("ABNegaMax");
             System.Object o = Activator.CreateInstance(scriptType);
-            playerTwoScript = (P2AI)o;
+            playerTwoScript = (ABNegaMax)o;
             playerTwoScript.setColor(BoardSpace.WHITE);
         }
 
