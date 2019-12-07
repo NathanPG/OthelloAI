@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomAI : AIScript {
+public class RandomAI : P1AI {
 
     /// <summary>
     /// This shows how to override the abstract definition of makeMove. All this one
