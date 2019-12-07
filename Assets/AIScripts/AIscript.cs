@@ -19,7 +19,7 @@ public abstract class AIscript {
     /// <returns></returns>
     public abstract KeyValuePair<int, int> makeMove(List<KeyValuePair<int, int>> availableMoves, BoardSpace[][] currentBoard, uint turn_number);
 
-    public abstract float Evaluation(BoardSpace[][] currentBoard);
+    public abstract float Evaluation(BoardSpace[][] currentBoard, uint turn_number);
     /// <summary>
     /// Displays the piece on the board.
     /// </summary>

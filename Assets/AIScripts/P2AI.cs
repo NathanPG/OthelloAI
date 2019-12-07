@@ -21,26 +21,23 @@ public class P2AI : AIscript
         return availableMoves[Random.Range(0, availableMoves.Count)];
     }
 
-    public override float Evaluation(BoardSpace[][] currentBoard)
-    {
-        int blackCount = 0;
-        int whiteCount = 0;
-        foreach (BoardSpace[] row in currentBoard)
-        {
-            foreach (BoardSpace space in row)
-            {
-                switch (space)
-                {
-                    case (BoardSpace.BLACK):
-                        blackCount++;
-                        break;
-                    case (BoardSpace.WHITE):
-                        whiteCount++;
-                        break;
+    public override float Evaluation(BoardSpace[][] currentBoard, uint turn_number) {
+        BoardSpace enemyColor = turn_number % 2 == 0 ? BoardSpace.WHITE : BoardSpace.BLACK;
+        BoardSpace ourColor = turn_number % 2 == 0 ? BoardSpace.BLACK : BoardSpace.WHITE;
+        int ourCount = 0;
+        int enemyCount = 0;
+        foreach (BoardSpace[] row in currentBoard) {
+            foreach (BoardSpace space in row) {
+                if (space == enemyColor) {
+                    enemyCount++;
                 }
+                if (space == ourColor) {
+                    ourCount++;
+                }
+
             }
         }
-        return whiteCount - blackCount;
+        return ourCount - enemyCount;
     }
-    
+
 }

@@ -19,7 +19,7 @@ public class P1AI : AIscript
 
     public override KeyValuePair<int, int> makeMove(List<KeyValuePair<int, int>> availableMoves, BoardSpace[][] currentBoard, uint turn_number)
     {
-        Debug.Log(string.Join(",", availableMoves));
+        //Debug.Log(string.Join(",", availableMoves));
         BoardSpace enemyColor = turn_number % 2 == 0 ? BoardSpace.WHITE : BoardSpace.BLACK;
         BoardSpace ourColor = turn_number % 2 == 0 ? BoardSpace.BLACK : BoardSpace.WHITE;
         KeyValuePair<int, int> result;
@@ -51,12 +51,13 @@ public class P1AI : AIscript
     private float negaMax(BoardSpace[][] currentBoard, int current_depth, int Max_depth, uint turn_number) {
         BoardSpace enemyColor = turn_number % 2 == 0 ? BoardSpace.WHITE : BoardSpace.BLACK;
         BoardSpace ourColor = turn_number % 2 == 0 ? BoardSpace.BLACK : BoardSpace.WHITE;
-        if (current_depth == Max_depth) {
-            return Evaluation(currentBoard);
-        }
         uint current_player = turn_number % 2;
         List<KeyValuePair<int, int>> possible_moves = BoardScript.GetValidMoves(currentBoard, turn_number);
+        if (current_depth == Max_depth || possible_moves.Count == 0) {
+            return Evaluation(currentBoard, turn_number);
+        }
         List<float> score = new List<float>();
+        //Debug.Log("current depth: " + current_depth + " move size: " + possible_moves.Count);
         foreach (KeyValuePair<int, int> move in possible_moves) {
             BoardSpace[][] newer_board = new BoardSpace[8][];
             for (int i = 0; i < 8; ++i) {
@@ -67,14 +68,14 @@ public class P1AI : AIscript
             }
             newer_board[move.Key][move.Value] = ourColor;
             List<KeyValuePair<int, int>> changed = BoardScript.GetPointsChangedFromMove(newer_board, turn_number, move.Value, move.Key);
-            //Debug.Log(string.Join(",", changed));
+            //Debug.Log("changed: " + string.Join(",", changed));
             foreach (KeyValuePair<int, int> change in changed) {
                 newer_board[change.Key][change.Value] = ourColor;
             }
             score.Add(negaMax(newer_board, current_depth + 1, Max_depth, turn_number + 1));
 
         }
-        //Debug.Log(string.Join(",", score));
+        //Debug.Log("score: " + string.Join(",", score));
         if (current_depth % 2 == 1) {
             return score.Min();
         } else {
@@ -84,25 +85,25 @@ public class P1AI : AIscript
         
     }
 
-    public override float Evaluation(BoardSpace[][] currentBoard)
+    public override float Evaluation(BoardSpace[][] currentBoard, uint turn_number)
     {
-        int blackCount = 0;
-        int whiteCount = 0;
+        BoardSpace enemyColor = turn_number % 2 == 0 ? BoardSpace.WHITE : BoardSpace.BLACK;
+        BoardSpace ourColor = turn_number % 2 == 0 ? BoardSpace.BLACK : BoardSpace.WHITE;
+        int ourCount = 0;
+        int enemyCount = 0;
         foreach (BoardSpace[] row in currentBoard)
         {
             foreach (BoardSpace space in row)
             {
-                switch (space)
-                {
-                    case (BoardSpace.BLACK):
-                        blackCount++;
-                        break;
-                    case (BoardSpace.WHITE):
-                        whiteCount++;
-                        break;
+                if (space == enemyColor) {
+                    enemyCount++;
                 }
+                if (space == ourColor) {
+                    ourCount++;
+                }
+                
             }
         }
-        return blackCount - whiteCount;
+        return ourCount - enemyCount;
     }
 }
