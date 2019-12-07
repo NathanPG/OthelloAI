@@ -2,31 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[System.Serializable]
-public abstract class P2AI
+public class P2AI : AIscript
 {
 
-    protected BoardSpace color;
-
     /// <summary>
-    /// This is the way to make a move happen. Note the definition for how the board is 
-    /// represented (a 2D array of Enums) and how the return value is handled (the score 
-    /// and the move as a KeyValuePair). Your code will need to supply the actual 
-    /// code in the descendent class that you write. 
+    /// This shows how to override the abstract definition of makeMove. All this one
+    /// does is stupidly a random, yet legal, move.
     /// </summary>
     /// <param name="availableMoves"></param>
     /// <param name="currentBoard"></param>
     /// <returns></returns>
-    public abstract KeyValuePair<int, int> makeMove(List<KeyValuePair<int, int>> availableMoves, BoardSpace[][] currentBoard);
 
-    /// <summary>
-    /// Displays the piece on the board.
-    /// </summary>
-    /// <param name="color"></param>
-    public void setColor(BoardSpace color)
+    public override KeyValuePair<int, int> makeMove(List<KeyValuePair<int, int>> availableMoves, BoardSpace[][] currentBoard)
     {
-        this.color = color;
+
+        return availableMoves[Random.Range(0, availableMoves.Count)];
     }
 
 }
