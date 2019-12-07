@@ -21,6 +21,8 @@ public class P2AI : AIscript
         return availableMoves[Random.Range(0, availableMoves.Count)];
     }
 
+
+
     public override float Evaluation(BoardSpace[][] currentBoard, uint turn_number) {
         BoardSpace enemyColor = turn_number % 2 == 0 ? BoardSpace.WHITE : BoardSpace.BLACK;
         BoardSpace ourColor = turn_number % 2 == 0 ? BoardSpace.BLACK : BoardSpace.WHITE;

@@ -53,7 +53,7 @@ public class P1AI : AIscript
         BoardSpace ourColor = turn_number % 2 == 0 ? BoardSpace.BLACK : BoardSpace.WHITE;
         uint current_player = turn_number % 2;
         List<KeyValuePair<int, int>> possible_moves = BoardScript.GetValidMoves(currentBoard, turn_number);
-        if (current_depth == Max_depth || possible_moves.Count == 0) {
+        if (current_depth >= Max_depth || possible_moves.Count == 0) {
             return Evaluation(currentBoard, turn_number);
         }
         List<float> score = new List<float>();
@@ -72,38 +72,44 @@ public class P1AI : AIscript
             foreach (KeyValuePair<int, int> change in changed) {
                 newer_board[change.Key][change.Value] = ourColor;
             }
-            score.Add(negaMax(newer_board, current_depth + 1, Max_depth, turn_number + 1));
+            score.Add(-negaMax(newer_board, current_depth + 1, Max_depth, turn_number + 1));
 
         }
         //Debug.Log("score: " + string.Join(",", score));
-        if (current_depth % 2 == 1) {
-            return score.Min();
-        } else {
             return score.Max();
-        }
+        
 
         
     }
 
     public override float Evaluation(BoardSpace[][] currentBoard, uint turn_number)
     {
-        BoardSpace enemyColor = turn_number % 2 == 0 ? BoardSpace.WHITE : BoardSpace.BLACK;
-        BoardSpace ourColor = turn_number % 2 == 0 ? BoardSpace.BLACK : BoardSpace.WHITE;
-        int ourCount = 0;
-        int enemyCount = 0;
-        foreach (BoardSpace[] row in currentBoard)
-        {
-            foreach (BoardSpace space in row)
-            {
-                if (space == enemyColor) {
-                    enemyCount++;
+        int blackCount = 0;
+        int whiteCount = 0;
+        foreach (BoardSpace[] row in currentBoard) {
+            foreach (BoardSpace space in row) {
+                switch (space) {
+                    case (BoardSpace.BLACK):
+                        blackCount++;
+                        break;
+                    case (BoardSpace.WHITE):
+                        whiteCount++;
+                        break;
                 }
-                if (space == ourColor) {
-                    ourCount++;
-                }
-                
             }
         }
-        return ourCount - enemyCount;
+        if(color == BoardSpace.BLACK) {
+            if(turn_number % 2 == 0) {
+                return (blackCount - whiteCount) / (blackCount + whiteCount);
+            } else {
+                return (whiteCount - blackCount) / (blackCount + whiteCount);
+            }
+        } else {
+            if (turn_number % 2 == 1) {
+                return (blackCount - whiteCount) / (blackCount + whiteCount);
+            } else {
+                return (whiteCount - blackCount) / (blackCount + whiteCount);
+            }
+        }
     }
 }
