@@ -15,10 +15,9 @@ public class P2AI : AIscript
     /// <param name="availableMoves"></param>
     /// <param name="currentBoard"></param>
     /// <returns></returns>
-
     public override KeyValuePair<int, int> makeMove(List<KeyValuePair<int, int>> availableMoves, BoardSpace[][] currentBoard, int depth)
     {
-
+        
         return availableMoves[Random.Range(0, availableMoves.Count)];
     }
 
@@ -43,4 +42,5 @@ public class P2AI : AIscript
         }
         return whiteCount - blackCount;
     }
+    
 }
