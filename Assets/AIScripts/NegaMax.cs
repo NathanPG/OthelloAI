@@ -72,6 +72,9 @@ public class NegaMAX : AIscript
             foreach (KeyValuePair<int, int> change in changed) {
                 newer_board[change.Key][change.Value] = ourColor;
             }
+            //add a variable that stores alpha
+            //instead of compiling scores, compare with beta. if >=, just return
+            //negaMax w/ alpha and beta being -beta, -<variable>
             score.Add(-negaMax(newer_board, current_depth + 1, Max_depth, turn_number + 1));
         }
         //Debug.Log("score: " + string.Join(",", score));
