@@ -42,6 +42,7 @@ public class NegaMAX : AIscript
             float candidate = negaMax(newer_board, 1, Maxdepth, turn_number+1);
             if(candidate > score) {
                 result = new KeyValuePair<int, int>(move.Key, move.Value);
+                score = candidate;
             }
 
         }
