@@ -22,6 +22,7 @@ public class ABNegaMax : AIscript
         BoardSpace enemyColor = turn_number % 2 == 0 ? BoardSpace.WHITE : BoardSpace.BLACK;
         BoardSpace ourColor = turn_number % 2 == 0 ? BoardSpace.BLACK : BoardSpace.WHITE;
         KeyValuePair<int, int> result;
+        List<KeyValuePair<int, int>> result_candidates = new List<KeyValuePair<int, int>>();
         float score = float.NegativeInfinity;
         foreach (KeyValuePair<int, int> move in availableMoves) {
             BoardSpace[][] newer_board = new BoardSpace[8][];
@@ -40,14 +41,23 @@ public class ABNegaMax : AIscript
             }
             float candidate = ABnegaMax(newer_board, 1, Maxdepth, turn_number + 1, float.NegativeInfinity, float.PositiveInfinity);
             //Debug.Log("candidate: " + candidate);
-            if (candidate > score) {
-                result = new KeyValuePair<int, int>(move.Key, move.Value);
-                score = candidate;
+            if (candidate >= score) {
+                if (candidate > score)
+                {
+                    result_candidates.Clear();
+                    result = new KeyValuePair<int, int>(move.Key, move.Value);
+                    score = candidate;
+                    result_candidates.Add(result);
+                }
+                else
+                {
+                    result_candidates.Add(result);
+                }
             }
         }
         //Debug.Log("turn number: " + turn_number);
         //Debug.Log("final score: " + score);
-        return result;
+        return result_candidates[Random.Range(0, result_candidates.Count)];
     }
 
     private float ABnegaMax(BoardSpace[][] currentBoard, int current_depth, int Max_depth, uint turn_number, float alpha, float beta) {
